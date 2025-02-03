@@ -135,6 +135,16 @@ Route::post('/wallet-mpesa-lipa', function () {
     );
 });
 
+Route::post('/wallet-mpesa-b2c', function () {
+    return (new PesaswapService())->walletMpesaB2c(
+        '1234567890',
+        'njhbhjbjh',
+        '0987777779',
+        '22222',
+        'alsdjknwdknfkinkncjwendn'
+    );
+});
+
 Route::get('/mpesa-balance', function () {
     return (new PesaswapService())->mpesaBalance();
 });

@@ -256,4 +256,21 @@ class PesaswapService
 
         return $response->json();
     }
+
+    public function walletMpesaB2c($merchantIdentifier, $transactionExternalId, $amount, $commandId, $phone)
+    {
+        $url = $this->base_url_csharp . '/api/wallet/mpesa-b2c';
+
+        $data = [
+            'MerchantIdentifier' => $merchantIdentifier,
+            'TransactionExternalId' => $transactionExternalId,
+            'Amount' => $amount,
+            'CommandId' => $commandId,
+            'PartyB' => $phone
+        ];
+
+        $response = Http::withToken($this->tokenization())->post($url, data: $data);
+
+        return $response->json();
+    }
 }
