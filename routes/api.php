@@ -84,6 +84,39 @@ Route::post('/refund', function () {
     );
 });
 
+Route::post('/payment-request', function () {
+    return (new PesaswapService())->paymentRequest(
+        '1234567890',
+        'njhbhjbjh',
+        1,
+        'dafwedewd',
+        '211/11/1111',
+        '1234567890',
+        1
+    );
+});
+
+Route::post('/payment-request-recurring', function () {
+    return (new PesaswapService())->paymentRequestRecurringBill(
+        '1234567890',
+        'njhbhjbjh',
+        1,
+        'dafwedewd',
+        '211/11/1111',
+        '1234567890',
+        23
+    );
+});
+
+Route::post('/airtel-collection', function () {
+    return (new PesaswapService())->airtelCollection(
+        '1234567890',
+        'njhbhjbjh',
+        '0987777779',
+        1,
+    );
+});
+
 Route::get('/mpesa-balance', function () {
     return (new PesaswapService())->mpesaBalance();
 });

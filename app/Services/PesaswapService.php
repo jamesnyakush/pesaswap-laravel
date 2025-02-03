@@ -165,4 +165,64 @@ class PesaswapService
         return $response->json();
     }
 
+    public function paymentRequest($paybill_description, $desc, $range, $external_id, $billing_date, $last_billing_date, $total_amount)
+    {
+        $url = $this->base_url . '/api/payment/request';
+
+        $data = [
+            'consumer_key' => env('PESASWAP_CONSUMER_KEY'),
+            'api_key' => env('PESASWAP_API_KEY'),
+            'paybill_description' => $paybill_description,
+            'description' => $desc,
+            'range' => $range,
+            'external_id' => $external_id,
+            'billing_date' => $billing_date,
+            'last_billing_date' => $last_billing_date,
+            'total_amount' => $total_amount
+        ];
+
+        $response = Http::post($url, $data);
+
+        return $response->json();
+    }
+
+    public function paymentRequestRecurringBill($paybill_description, $description, $range, $external_id, $billing_date, $last_billing_date, $total_amount)
+    {
+        $url = $this->base_url . '/api/payment/request/recurring/billing';
+
+        $data = [
+            'consumer_key' => env('PESASWAP_CONSUMER_KEY'),
+            'api_key' => env('PESASWAP_API_KEY'),
+            'paybill_description' => $paybill_description,
+            'description' => $description,
+            'range' => $range,
+            'external_id' => $external_id,
+            'billing_date' => $billing_date,
+            'last_billing_date' => $last_billing_date,
+            'total_amount' => $total_amount
+        ];
+
+        $response = Http::post($url, $data);
+
+        return $response->json();
+    }
+
+    public function airtelCollection($merchantIdentifier, $transactionExternalId, $msisdn, $amount, $country = 'KE', $currency = 'KES')
+    {
+        $url = $this->base_url_csharp . '/api/wallet/airtel-collection-payment';
+
+        $data = [
+            'MerchantIdentifier' => $merchantIdentifier,
+            'TransactionExternalId' => $transactionExternalId,
+            'Msisdn' => $msisdn,
+            'Amount' => $amount,
+            'Country' => $country,
+            'Currency' => $currency
+        ];
+
+        $response = Http::withToken($this->tokenization())->post($url, data: $data);
+
+        return $response->json();
+    }
+
 }
