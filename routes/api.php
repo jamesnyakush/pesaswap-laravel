@@ -46,7 +46,32 @@ Route::post('/tokenization', function () {
 
 Route::post('/collection-payment', function () {
 
-    return (new PesaswapService())->collectionPayment();
+    return (new PesaswapService())->collectionPayment(
+        'KE',
+        'KES',
+        1,
+        '012027',
+        '5e50f7c4-0f84-45d5-b735-2011124ddc4b',
+        '5e50f7c4-0f84-45d5-b735-2011124ddc4b',
+        'mpesa'
+    );
+});
+
+Route::post('/mpesa-c2b-billrefno', function () {
+
+    return (new PesaswapService())->mpesaC2bBillRefNo(
+        'zzzz',
+        1,
+        'CustomerPayBillOnline',
+        '174379',
+        '123445',
+        '174379',
+        'kkdk'
+    );
+});
+
+Route::get('/reconcile-transaction', function () {
+    return (new PesaswapService())->reconcileTransaction();
 });
 
 Route::get('/mpesa-balance', function () {

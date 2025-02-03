@@ -96,22 +96,56 @@ class PesaswapService
         return $response->json();
     }
 
-    public function collectionPayment()
+    public function collectionPayment($country = 'KE', $currency = 'KES', $amount, $phone, $external_id, $comment, $processor)
     {
         $url = $this->base_url_csharp . '/api/collection-payment';
 
         $data = [
             'PaybillDescription' => 'PaybillDescription',
-            'Country' => 'KE',
-            'Currency' => 'KES',
-            'Amount' => 1,
-            'PhoneNumber' => '254714451234',
-            'TransactionExternalId' => 'TransactionExternalId',
-            'Comment' => 'Comment',
-            'Processor' => 'mpesa',
+            'Country' => $country,
+            'Currency' => $currency,
+            'Amount' => $amount,
+            'PhoneNumber' => $phone,
+            'TransactionExternalId' => $external_id,
+            'Comment' => $comment,
+            'Processor' => $processor,
         ];
 
-        $response = Http::withToken($this->tokenization())->post($url,data: $data);
+        $response = Http::withToken($this->tokenization())->post($url, data: $data);
+
+        return $response->json();
+    }
+
+    public function mpesaC2bBillRefNo($paybillDescription, $amount, $commandId = 'CustomerPayBillOnline', $phone, $short_code, $external_id, $billRefNumber)
+    {
+        $url = $this->base_url_csharp . '/api/mpesa-c2b-billrefno';
+
+        $data = [
+            'PaybillDescription' => $paybillDescription,
+            'Amount' => $amount,
+            'CommandId' => $commandId,
+            'Msisdn' => $phone,
+            'ShortCode' => $short_code,
+            'ExternalId' => $external_id,
+            'BillRefNumber' => $billRefNumber
+        ];
+
+        $response = Http::withToken($this->tokenization())->post($url, data: $data);
+
+        return $response->json();
+    }
+
+    public function reconcileTransaction()
+    {
+        $url = $this->base_url . '/api/reconcile-transaction';
+
+        $data = [
+            'api_key' => env('PESASWAP_API_KEY'),
+            'consumer_key' => env('PESASWAP_CONSUMER_KEY'),
+            'transaction_external_id' => '123456789',
+        ];
+
+        $response = Http::get($url, $data);
 
         return $response->json();
     }
