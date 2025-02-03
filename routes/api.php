@@ -117,6 +117,24 @@ Route::post('/airtel-collection', function () {
     );
 });
 
+Route::post('/balance-summary', function () {
+    return (new PesaswapService())->balanceSummary(
+        '1234567890',
+        'njhbhjbjh',
+        '0987777779',
+    );
+});
+
+Route::post('/wallet-mpesa-lipa', function () {
+    return (new PesaswapService())->walletMpesaLipa(
+        '1234567890',
+        'njhbhjbjh',
+        '0987777779',
+        '22222',
+        'alsdjknwdknfkinkncjwendn'
+    );
+});
+
 Route::get('/mpesa-balance', function () {
     return (new PesaswapService())->mpesaBalance();
 });

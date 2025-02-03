@@ -225,4 +225,35 @@ class PesaswapService
         return $response->json();
     }
 
+    public function balanceSummary($merchantIdentifier, $originalTransactionExternalId, $transactionExternalId)
+    {
+        $url = $this->base_url_csharp . '/api/wallet/balance-summary';
+
+        $data = [
+            'MerchantIdentifier' => $merchantIdentifier,
+            'OriginalTransactionExternalId' => $originalTransactionExternalId,
+            'TransactionExternalId' => $transactionExternalId
+        ];
+
+        $response = Http::withToken($this->tokenization())->post($url, data: $data);
+
+        return $response->json();
+    }
+
+    public function walletMpesaLipa($merchantIdentifier, $transactionExternalId, $amount, $phone, $comment)
+    {
+        $url = $this->base_url_csharp . '/api/wallet/mpesa-lipa';
+
+        $data = [
+            'MerchantIdentifier' => $merchantIdentifier,
+            'TransactionExternalId' => $transactionExternalId,
+            'Amount' => $amount,
+            'PhoneNumber' => $phone,
+            'Comment' => $comment,
+        ];
+
+        $response = Http::withToken($this->tokenization())->post($url, data: $data);
+
+        return $response->json();
+    }
 }
