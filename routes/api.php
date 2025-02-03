@@ -145,6 +145,26 @@ Route::post('/wallet-mpesa-b2c', function () {
     );
 });
 
+Route::post('/wallet-refund', function () {
+    return (new PesaswapService())->walletRefund(
+        '1234567890',
+        'njhbhjbjh',
+        '0987777779'
+    );
+});
+
+Route::post('/wallet-transaction', function () {
+    return (new PesaswapService())->walletTransaction(
+        '1234567890',
+        'njhbhjbjh',
+        '0987777779',
+        '',
+        '',
+        '',
+        ''
+    );
+});
+
 Route::get('/mpesa-balance', function () {
     return (new PesaswapService())->mpesaBalance();
 });

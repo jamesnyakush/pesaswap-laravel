@@ -273,4 +273,38 @@ class PesaswapService
 
         return $response->json();
     }
+
+    public function walletRefund($merchantIdentifier, $originalTransactionExternalId, $transactionExternalId)
+    {
+        $url = $this->base_url_csharp . '/api/wallet/refund';
+
+        $data = [
+            'MerchantIdentifier' => $merchantIdentifier,
+            'OriginalTransactionExternalId' => $originalTransactionExternalId,
+            'TransactionExternalId' => $transactionExternalId
+        ];
+
+        $response = Http::withToken($this->tokenization())->post($url, data: $data);
+
+        return $response->json();
+    }
+
+    public function walletTransaction($merchantIdentifier, $transactionExternalId, $fromDate, $toDate, $status, $skip, $take)
+    {
+        $url = $this->base_url_csharp . '/api/wallet/transactions';
+
+        $data = [
+            'MerchantIdentifier' => $merchantIdentifier,
+            'TransactionExternalId' => $transactionExternalId,
+            'FromDate' => $fromDate,
+            'ToDate' => $toDate,
+            'Status' => $status,
+            'Skip' => $skip,
+            'Take' => $take,
+        ];
+
+        $response = Http::withToken($this->tokenization())->post($url, data: $data);
+
+        return $response->json();
+    }
 }
