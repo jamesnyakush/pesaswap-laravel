@@ -70,8 +70,18 @@ Route::post('/mpesa-c2b-billrefno', function () {
     );
 });
 
-Route::get('/reconcile-transaction', function () {
-    return (new PesaswapService())->reconcileTransaction();
+Route::post('/reconcile-transaction', function () {
+    return (new PesaswapService())->reconcileTransaction(
+        '2021-08-01',
+    );
+});
+
+Route::post('/refund', function () {
+    return (new PesaswapService())->refund(
+        '333',
+        '1234567890',
+        ''
+    );
 });
 
 Route::get('/mpesa-balance', function () {

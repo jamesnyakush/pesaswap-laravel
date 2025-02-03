@@ -135,17 +135,32 @@ class PesaswapService
         return $response->json();
     }
 
-    public function reconcileTransaction()
+    public function refund($merchantIdentifier, $sourceTransactionExternalId, $refundTransactionExternalId)
+    {
+        $url = $this->base_url_csharp . '/api/refund';
+
+        $data = [
+            'MerchantIdentifier' => $merchantIdentifier,
+            'SourceTransactionExternalId' => $sourceTransactionExternalId,
+            'RefundTransactionExternalId' => $refundTransactionExternalId,
+        ];
+
+        $response = Http::withToken($this->tokenization())->post($url, data: $data);
+
+        return $response->json();
+    }
+
+    public function reconcileTransaction($transaction_external_id)
     {
         $url = $this->base_url . '/api/reconcile-transaction';
 
         $data = [
             'api_key' => env('PESASWAP_API_KEY'),
             'consumer_key' => env('PESASWAP_CONSUMER_KEY'),
-            'transaction_external_id' => '123456789',
+            'transaction_external_id' => $transaction_external_id,
         ];
 
-        $response = Http::get($url, $data);
+        $response = Http::post($url, $data);
 
         return $response->json();
     }
